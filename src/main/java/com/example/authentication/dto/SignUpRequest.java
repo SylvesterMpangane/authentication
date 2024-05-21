@@ -1,13 +1,14 @@
 package com.example.authentication.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public record SignUpRequest(
-        String email,
-        String password,
-        @NotBlank String fullName,
+        @NotBlank() @Email() String email,
+        @NotBlank() String password,
+        @NotBlank() String fullName,
 
-        String name,
+        @NotBlank() String name,
 
-        String surname
+        @NotBlank() String surname
 ) {}

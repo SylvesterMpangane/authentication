@@ -8,19 +8,22 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/v1/auth")
 public class AuthenticationController {
 
-    private final AuthenticationService authenticationService;
+    private AuthenticationService authenticationService;
 
-    @PostMapping(path = "sign-in")
-    public String signIn(SignInRequest signInRequest) {
+    private AuthenticationController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
+    }
+
+    @GetMapping(path = "sign-in")
+    public String signIn(@Valid() SignInRequest signInRequest) {
         return authenticationService.signIn(signInRequest);
     }
 
     @PostMapping(path = "/sign-up")
-    public String signUp(@Valid SignUpRequest signUpRequest) {
+    public String signUp(@Valid() SignUpRequest signUpRequest) {
         return authenticationService.signUp(signUpRequest);
     }
 }

@@ -19,7 +19,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String signIn(SignInRequest signInRequest) {
-        UserEntity dbUser = authenticationRepository.findById(UUID.randomUUID()).orElse(null);
+        UserEntity dbUser = authenticationRepository.findById(1L).orElse(null);
 
         if (Objects.nonNull(dbUser)) {
             if (signInRequest.password().equals(dbUser.getPassword())
