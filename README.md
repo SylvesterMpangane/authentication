@@ -5,7 +5,7 @@ Service to manage user authentication.
  - Register users /api/v1/auth/sign-up
  - Authenticate users  /api/v1/auth/sign-in
 
-## Proposed features
+## Proposed feature
  - Ability to assign roles to users.
 
 ## Your task

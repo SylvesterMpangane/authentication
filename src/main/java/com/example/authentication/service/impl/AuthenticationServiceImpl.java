@@ -6,6 +6,7 @@ import com.example.authentication.model.UserEntity;
 import com.example.authentication.repository.AuthenticationRepository;
 import com.example.authentication.service.AuthenticationService;
 import com.example.authentication.service.SignupRequestConverter;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         UserEntity user = signupRequestConverter.convert(signUpRequest);
         authenticationRepository.save(user);
         return "Success!!!";
+    }
+
+    @PostConstruct
+    public void init() {
+        SignUpRequest signInRequest = SignUpRequest.builder()
+                .name("John")
+                .surname("Wick")
+                .email("john.w@auth.co.za")
+                .password("Password1").build();
+        this.signUp(signInRequest);
     }
 }
