@@ -6,26 +6,26 @@ import com.example.authentication.model.UserEntity;
 import com.example.authentication.repository.AuthenticationRepository;
 import com.example.authentication.service.AuthenticationService;
 import com.example.authentication.service.SignupRequestConverter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    private AuthenticationRepository authenticationRepository;
-    private SignupRequestConverter signupRequestConverter;
+    private final AuthenticationRepository authenticationRepository;
+    private final SignupRequestConverter signupRequestConverter;
 
     @Override
     public String signIn(SignInRequest signInRequest) {
-        UserEntity dbUser = authenticationRepository.findById(1L).orElse(null);
+        UserEntity dbUser = authenticationRepository.findByEmailIgnoreCase(signInRequest.email())
+                .orElseThrow(() -> new RuntimeException("Invalid username or password"));
 
-        if (Objects.nonNull(dbUser)) {
-            if (signInRequest.password().equals(dbUser.getPassword())
-                    && signInRequest.email().equals(dbUser.getPassword())) {
+        if (Objects.nonNull(dbUser)
+                && signInRequest.password().equals(dbUser.getPassword())) {
                 return "Success!!!";
-            }
         }
         return "Invalid username or password";
     }
